@@ -64,7 +64,12 @@ COUNT(*) <> 4;
 This method involves creating a CTE to combine the four tables and then checking for inconsistencies.
 This query effectively checks for inconsistencies in the id and ActivityDay columns across the four tables. The query results in no data, it means that there are no rows in the combined dataset that have inconsistent Id and ActivityDay values across the four tables. This indicates that the data in these columns is consistent across all four tables.
 
--I check if the calories column in the dailyActivity_merged table is the same as the calories column in the dailyCalories_merged table in BigQuery, so I run the following query:
+- I check if the calories column in the dailyActivity_merged table is the same as the calories column in the dailyCalories_merged table in BigQuery, so I run the following query:
+
+'''sql
+
+
+
 
 
 
