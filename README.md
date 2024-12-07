@@ -58,11 +58,8 @@ id,
 activityDay
 --The HAVING clause filters the results to only include groups where the count is not equal to 4. This indicates that there are missing or inconsistent rows for that specific id and activityDay combination.
 HAVING
-COUNT(*) <> 4;'''
-
-This method involves creating a CTE to combine the four tables and then checking for inconsistencies.
-
-![1](https://github.com/user-attachments/assets/a0433e13-df0d-4867-8474-4de08cc59666)
+COUNT(*) <> 4;
+'''
 
 
 
