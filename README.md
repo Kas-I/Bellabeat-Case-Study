@@ -61,7 +61,7 @@ HAVING
 COUNT(*) <> 4;
 (```)
 
-![1](https://github.com/user-attachments/assets/157b5f47-21f7-494a-962a-fcf4413f67b3)
+![1](https://github.com/Kas-I/Bellabeat-Case-Study/blob/5717214c616ed9e82f8264d74b51b600bee1acea/1.jpg)
 
 
 
