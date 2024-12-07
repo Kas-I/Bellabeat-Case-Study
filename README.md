@@ -88,6 +88,12 @@ ON
 
 ![2](https://github.com/user-attachments/assets/22793eb9-ce68-4c3c-a64a-dc6cb97f0dcf)
 
+This returns no results, that means that the calories columns are the same for all matched rows.
+
+- I check if the TotalSteps column in the dailyActivity_merged table is the same as the StepTotal column in the dailySteps_merged table in BigQuery, I run the following query:
+
+
+
 
 
 
