@@ -5,7 +5,7 @@
 Bellabeat is a pioneering wellness technology company founded by Urška Sršen and Sando Mur in 2013, focusing on women's health and wellness. Known for its innovative wearable and non-wearable tech, Bellabeat offers products that include the Leaf wellness tracker, the Time wellness watch, and the Spring water bottle, all of which connect to the Bellabeat app. This app provides users with insights into their activity, sleep, stress, menstrual cycle, and mindfulness habits.
 With a mission to empower women by providing valuable health information and motivational tips, Bellabeat fosters a community centered on holistic well-being. The company has rapidly grown since its inception, launching multiple products and expanding its global presence. Bellabeat employs a marketing analytics team, which includes junior data analysts, to analyze consumer data and inform marketing strategies.
 Sršen, as Chief Creative Officer, combines her artistic background with technology to create beautifully designed products that inspire women worldwide. By collecting data on activity, sleep, stress, and reproductive health, Bellabeat enables women to better understand their health and habits. Through its subscription-based membership program, users gain personalized guidance on nutrition, activity, sleep, health, beauty, and mindfulness tailored to their lifestyles and goals. Overall, Bellabeat represents a movement to seamlessly integrate wellness into everyday life, helping women navigate their unique health journeys.
-![1](https://github.com/user-attachments/assets/157b5f47-21f7-494a-962a-fcf4413f67b3)
+
 
 ## 2. ASK Section
 
@@ -59,10 +59,7 @@ activityDay
 --The HAVING clause filters the results to only include groups where the count is not equal to 4. This indicates that there are missing or inconsistent rows for that specific id and activityDay combination.
 HAVING
 COUNT(*) <> 4;
-
-this image
-
-![Image_Alt](https://github.com/Kas-I/Bellabeat-Case-Study/blob/8e92690a592a6249b40759cba244ef62d7458c42/1.jpg)
+![1](https://github.com/user-attachments/assets/157b5f47-21f7-494a-962a-fcf4413f67b3)
 
 
 
