@@ -66,7 +66,28 @@ This query effectively checks for inconsistencies in the id and ActivityDay colu
 
 - I check if the calories column in the dailyActivity_merged table is the same as the calories column in the dailyCalories_merged table in BigQuery, so I run the following query:
 
-'''sql
+```sql
+SELECT 
+    da.id,
+    da.activityday,
+    da.calories AS calories_dailyActivity,
+    dc.calories AS calories_dailyCalories,
+    CASE 
+        WHEN da.calories = dc.calories THEN "Match"
+        ELSE "Mismatch"
+    END AS comparison_result
+FROM 
+    `my-project-2024-423122.bellabeat.dailyActivity_merged` AS da
+JOIN 
+    `my-project-2024-423122.bellabeat.dailyCalories_merged` AS dc
+ON 
+    da.id = dc.id
+    AND da.activityday = dc.activityday
+    WHERE da.calories != dc.calories
+```
+
+![2](https://github.com/user-attachments/assets/22793eb9-ce68-4c3c-a64a-dc6cb97f0dcf)
+
 
 
 
