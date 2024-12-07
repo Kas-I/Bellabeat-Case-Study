@@ -32,6 +32,35 @@ After the first cleaning with google sheets I upload the csv files that I decide
 - i take a closer look at the tables dailyactivity, dailycalories, dailyintensities, and dailysteps with similar columns id and ActivityDay, to confirm whether the data were the same based on their user ids and activityday I ran the following query:
 
 
+```sql
+-- The WITH clause creates a Common Table Expression (CTE) named combined_data.
+WITH combined_data AS (
+SELECT id, activityDay FROM `my-project-2024-423122.bellabeat.dailyActivity_merged`
+--The UNION ALL operator combines all rows from the four tables, including duplicates.
+UNION ALL
+SELECT id, activityDay FROM `my-project-2024-423122.bellabeat.dailyCalories_merged`
+UNION ALL
+SELECT id, activityDay FROM `my-project-2024-423122.bellabeat.dailyIntensities_merged`
+UNION ALL
+SELECT id, activityDay FROM `my-project-2024-423122.bellabeat.dailySteps_merged`
+)
+SELECT
+id,
+activityDay,
+--The COUNT(*) function counts the number of occurrences of each unique id and activityDay pair.
+COUNT(*) AS count
+FROM
+combined_data
+--The GROUP BY clause groups the combined data by id and activityDay.
+GROUP BY
+id,
+activityDay
+--The HAVING clause filters the results to only include groups where the count is not equal to 4. This indicates that there are missing or inconsistent rows for that specific id and activityDay combination.
+HAVING
+COUNT(*) <> 4;
+
+
+
   
 
 
