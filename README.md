@@ -62,7 +62,6 @@ COUNT(*) <> 4;'''
 
 This method involves creating a CTE to combine the four tables and then checking for inconsistencies.
 
-![1](https://github.com/user-attachments/assets/6a1eb5de-8f90-4763-8dee-ed2964f803dd)
 
 
 
