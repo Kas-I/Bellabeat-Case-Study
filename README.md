@@ -44,7 +44,7 @@ SELECT id, activityDay FROM `my-project-2024-423122.bellabeat.dailyIntensities_m
 UNION ALL
 SELECT id, activityDay FROM `my-project-2024-423122.bellabeat.dailySteps_merged`
 )
-SELECT
+SELECTthis image 
 id,
 activityDay,
 --The COUNT(*) function counts the number of occurrences of each unique id and activityDay pair.
@@ -59,6 +59,7 @@ activityDay
 HAVING
 COUNT(*) <> 4;
 
+this image
 
 ![Image_Alt](https://github.com/Kas-I/Bellabeat-Case-Study/blob/8e92690a592a6249b40759cba244ef62d7458c42/1.jpg)
 
