@@ -60,7 +60,7 @@ HAVING
 COUNT(*) <> 4;
 
 
-![image alt](https://github.com/Kas-I/Bellabeat-Case-Study/blob/8e92690a592a6249b40759cba244ef62d7458c42/1.jpg)
+![Image_Alt](https://github.com/Kas-I/Bellabeat-Case-Study/blob/8e92690a592a6249b40759cba244ef62d7458c42/1.jpg)
 
 
 
