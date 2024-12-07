@@ -1,2 +1,6 @@
-# Bellabeat-Case-Study
-This project analyzes Fitbit fitness tracker data to uncover insights on user behavior and engagement with Bellabeat's smart devices. The findings aim to inform marketing strategies and improve user experiences for Bellabeat's wellness products.
+### Bellabeat Case Study
+
+## Project Overview
+
+The Bellabeat case study focuses on analyzing Fitbit fitness tracker data to uncover patterns in user behavior and engagement. This data-driven analysis supports Bellabeat’s mission to empower women through innovative wellness technology and informs strategic marketing decisions for its product line.
+
