@@ -58,7 +58,7 @@ activityDay
 --The HAVING clause filters the results to only include groups where the count is not equal to 4. This indicates that there are missing or inconsistent rows for that specific id and activityDay combination.
 HAVING
 COUNT(*) <> 4;
-'''
+```
 
 
 
