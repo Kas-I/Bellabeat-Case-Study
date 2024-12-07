@@ -60,6 +60,7 @@ HAVING
 COUNT(*) <> 4;
 
 
+![Project Visualization](1.png)
 
   
 
