@@ -236,6 +236,45 @@ So the values varies for:
 - Max_Sedentary_Minutes 851-1440
 - Avg_Sedentary_Minutes 662.32-1317.41
 
+### 5.3 Average Active Minutes per ID
+Next, I focused on calculating the averages of various activity minutes by ID.
+
+```sql
+1.	SELECT Id, 
+2.	avg(VeryActiveMinutes) AS Avg_Very_Active_Minutes,
+3.	avg(FairlyActiveMinutes) AS Avg_Fairly_Active_Minutes,
+4.	avg(LightlyActiveMinutes) AS Avg_Lightly_Active_Minutes,
+5.	avg(SedentaryMinutes) AS Avg_Sedentary_Minutes,
+6.	FROM `my-project-2024-423122.bellabeat.dailyActivity_merged`
+7.	GROUP BY Id
+```
+
+![6](https://github.com/user-attachments/assets/82dd94f6-481b-48aa-a41f-d26244ff6dfe)
+
+The average number of minutes spent in the Sedentary activity level was the highest for each unique ID.
+
+### 5.4 Average Active Minutes per Weekday
+ I wanted to analyze the average number of active minutes per weekday.
+
+ ```sql
+1.	SELECT 
+2.	  activityday,
+3.	  FORMAT_DATE('%A', activityday) AS weekday,
+4.	  ROUND(AVG(VeryActiveMinutes)) AS Avg_Very_Active_Minutes,
+5.	  ROUND(AVG(FairlyActiveMinutes)) AS Avg_Fairly_Active_Minutes,
+6.	  ROUND(AVG(LightlyActiveMinutes)) AS Avg_Lightly_Active_Minutes,
+7.	  ROUND(AVG(SedentaryMinutes)) AS Avg_Sedentary_Minutes
+8.	FROM  
+9.	  `my-project-2024-423122.bellabeat.dailyActivity_merged`
+10.	GROUP BY 
+11.	  activityday, weekday
+12.	ORDER BY 
+13.	  Activityday
+```
+
+![7](https://github.com/user-attachments/assets/4f57fd3f-72e5-4e0a-9906-ba1eeaacf0f1)
+
+
 
 
 
