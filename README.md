@@ -92,6 +92,27 @@ This returns no results, that means that the calories columns are the same for a
 
 - I check if the TotalSteps column in the dailyActivity_merged table is the same as the StepTotal column in the dailySteps_merged table in BigQuery, I run the following query:
 
+```sql
+1.	SELECT 
+2.	    da.id,
+3.	    da.activityday,
+4.	    da.TotalSteps AS total_steps_dailyActivity,
+5.	    dc.StepTotal AS total_steps_dailySteps,
+6.	    CASE 
+7.	        WHEN da.TotalSteps = dc.StepTotal THEN "Match"
+8.	        ELSE "Mismatch"
+9.	    END AS comparison_result
+10.	FROM 
+11.	    `my-project-2024-423122.bellabeat.dailyActivity_merged` AS da
+12.	JOIN 
+13.	    `my-project-2024-423122.bellabeat.dailySteps_merged` AS dc
+14.	ON 
+15.	    da.id = dc.id
+16.	    AND da.activityday = dc.activityday
+17.	    WHERE da.TotalSteps != dc.StepTotal
+```
+
+
 
 
 
