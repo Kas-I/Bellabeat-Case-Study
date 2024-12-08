@@ -112,6 +112,130 @@ This returns no results, that means that the calories columns are the same for a
 17.	    WHERE da.TotalSteps != dc.StepTotal
 ```
 
+![3](https://github.com/user-attachments/assets/c6baba1a-b2c7-4765-bba7-3ce0a6e9d1c2)
+This returns no results, that means that these dy columns are the same for all matched rows.
+
+- Then, I check if these columns SedentaryMinutes, LightlyActiveMinutes, FairlyActiveMinutes, VeryActiveMinutes,	SedentaryActiveDistance, LightActiveDistance, ModeratelyActiveDistance, VeryActiveDistance are same in the  tables dailyActivity_merged and dailyIntensities_merged that have two same columns id and activityday I use a SQL query that joins the tables on id and activityday and then compares each of the columns.
+
+```sql
+1.	SELECT
+2.	  t1.id,
+3.	  t1.activityday,
+4.	  -- Check if each column matches and flag mismatches
+5.	  IF(t1.SedentaryMinutes = t2.SedentaryMinutes, TRUE, FALSE) AS SedentaryMinutes_match,
+6.	  IF(t1.LightlyActiveMinutes = t2.LightlyActiveMinutes, TRUE, FALSE) AS LightlyActiveMinutes_match,
+7.	  IF(t1.FairlyActiveMinutes = t2.FairlyActiveMinutes, TRUE, FALSE) AS FairlyActiveMinutes_match,
+8.	  IF(t1.VeryActiveMinutes = t2.VeryActiveMinutes, TRUE, FALSE) AS VeryActiveMinutes_match,
+9.	  IF(t1.SedentaryActiveDistance = t2.SedentaryActiveDistance, TRUE, FALSE) AS SedentaryActiveDistance_match,
+10.	  IF(t1.LightActiveDistance = t2.LightActiveDistance, TRUE, FALSE) AS LightActiveDistance_match,
+11.	  IF(t1.ModeratelyActiveDistance = t2.ModeratelyActiveDistance, TRUE, FALSE) AS ModeratelyActiveDistance_match,
+12.	  IF(t1.VeryActiveDistance = t2.VeryActiveDistance, TRUE, FALSE) AS VeryActiveDistance_match,
+13.	  -- Count mismatches
+14.	  CASE
+15.	    WHEN t1.SedentaryMinutes = t2.SedentaryMinutes
+16.	      AND t1.LightlyActiveMinutes = t2.LightlyActiveMinutes
+17.	      AND t1.FairlyActiveMinutes = t2.FairlyActiveMinutes
+18.	      AND t1.VeryActiveMinutes = t2.VeryActiveMinutes
+19.	      AND t1.SedentaryActiveDistance = t2.SedentaryActiveDistance
+20.	      AND t1.LightActiveDistance = t2.LightActiveDistance
+21.	      AND t1.ModeratelyActiveDistance = t2.ModeratelyActiveDistance
+22.	      AND t1.VeryActiveDistance = t2.VeryActiveDistance THEN TRUE
+23.	    ELSE FALSE
+24.	  END AS all_columns_match
+25.	FROM
+26.	  `my-project-2024-423122.bellabeat.dailyActivity_merged` AS t1
+27.	JOIN
+28.	  `my-project-2024-423122.bellabeat.dailyIntensities_merged` AS t2
+29.	ON
+30.	  t1.id = t2.id
+31.	  AND t1.activityday = t2.activityday
+```
+
+![4](https://github.com/user-attachments/assets/db772706-7fbb-4177-898a-87287ff0d824)
+The results are all true, which means that these columns are the same in these two tables.
+After all these results I decided for my analysis to use only one table, the dailyActivity_merged table.
+
+
+## 5.	ANALYZE and SHARE Section
+
+In this phase, a thorough analysis of key insights on user engagement with Bellabeat smart devices was conducted using the BigQuery console.User Activity Summary Statistics
+
+### 5.1 User Data Logging Frequency Distribution
+First, I wanted to see how many times the users wore/used the FitBit tracker:
+
+```sql
+1.	WITH log_counts AS (
+2.	    SELECT Id,
+3.	           COUNT(Id) AS Id_logs
+4.	    FROM `my-project-2024-423122.bellabeat.dailyActivity_merged`
+5.	    GROUP BY Id
+6.	)
+7.	
+8.	SELECT Id_logs AS `number of times logged data`,
+9.	       COUNT(Id) AS `number of users`
+10.	FROM log_counts
+11.	GROUP BY Id_logs
+12.	ORDER BY Id_logs;
+```
+
+![5](https://github.com/user-attachments/assets/0d57cade-6ee3-4edc-a984-2870f03268e7)
+
+21 of users tracked their data throughout the entire period from April 12, 2016, to May 12, 2016. When including users who missed only 1 to 3 days, the number increases to 27 indicating that this portion of users logged data or consistently wore their FitBit Tracker over the month.
+
+### 5.2 User Activity Summary Statistics
+Next, I aimed to analyze the minimum, maximum, and average values for total steps, total distance, calories, and activity levels by ID.
+
+```sql
+1.	(SELECT Id,
+2.	MIN(TotalSteps) AS Min_Total_Steps,
+3.	MAX(TotalSteps) AS Max_Total_Steps, 
+4.	AVG(TotalSteps) AS Avg_Total_Stpes,
+5.	MIN(TotalDistance) AS Min_Total_Distance, 
+6.	MAX(TotalDistance) AS Max_Total_Distance, 
+7.	AVG(TotalDistance) AS Avg_Total_Distance,
+8.	MIN(Calories) AS Min_Total_Calories,
+9.	MAX(Calories) AS Max_Total_Calories,
+10.	AVG(Calories) AS Avg_Total_Calories,
+11.	MIN(VeryActiveMinutes) AS Min_Very_Active_Minutes,
+12.	MAX(VeryActiveMinutes) AS Max_Very_Active_Minutes,
+13.	AVG(VeryActiveMinutes) AS Avg_Very_Active_Minutes,
+14.	MIN(FairlyActiveMinutes) AS Min_Fairly_Active_Minutes,
+15.	MAX(FairlyActiveMinutes) AS Max_Fairly_Active_Minutes,
+16.	AVG(FairlyActiveMinutes) AS Avg_Fairly_Active_Minutes,
+17.	MIN(LightlyActiveMinutes) AS Min_Lightly_Active_Minutes,
+18.	MAX(LightlyActiveMinutes) AS Max_Lightly_Active_Minutes,
+19.	AVG(LightlyActiveMinutes) AS Avg_Lightly_Active_Minutes,
+20.	MIN(SedentaryMinutes) AS Min_Sedentary_Minutes,
+21.	MAX(SedentaryMinutes) AS Max_Sedentary_Minutes,
+22.	AVG(SedentaryMinutes) AS Avg_Sedentary_Minutes
+23.	From `my-project-2024-423122.bellabeat.dailyActivity_merged`
+24.	Group BY Id
+25.	)
+```
+
+So the values varies for: 
+- Min_Total_Steps 0-4790
+- Max_Total_Steps 3790-36019
+- Avg_Total_Steps 916-16040
+- Min_Total_Distance 0-3.64
+- Max_Total_Distance 2.62-28.03
+- Avg_Total_Distance 0.63-13.21
+- Min_Total_Calories 0-1976
+- Max_Total_Calories 1760-4900
+- Avg_Total_Calories1483-3436
+- Min_Very_Active_Minutes 0
+- Max_Very_Active_Minutes 2-210
+- Avg_Very_Active_Minutes 0.09-87.33
+- Min_Fairly_Active_Minutes 0
+- Max_Fairly_Active_Minutes 6-143
+- Avg_Fairly_Active_Minutes 0.25-61.23
+- Min_Lightly_Active_Minutes 0-172
+- Max_Lightly_Active_Minutes 164-518
+- Avg_Lightly_Active_Minutes 38.58-327.9
+- Min_Sedentary_Minutes 0-1193
+- Max_Sedentary_Minutes 851-1440
+- Avg_Sedentary_Minutes 662.32-1317.41
+
 
 
 
