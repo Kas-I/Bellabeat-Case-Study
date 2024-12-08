@@ -274,6 +274,51 @@ The average number of minutes spent in the Sedentary activity level was the high
 
 ![7](https://github.com/user-attachments/assets/4f57fd3f-72e5-4e0a-9906-ba1eeaacf0f1)
 
+The findings indicate that Sedentary Minutes account for the highest number of active minutes. Notably, there isn’t much variation in the types of active minutes across different weekdays; users tend to accumulate a consistent amount of active minutes each day.
+This suggests that Bellabeat has an opportunity to help users achieve their activity goals. Since users appear to be striving to meet their daily activity targets, Bellabeat could encourage them to set higher goals, potentially increasing the number of very active and fairly active minutes they achieve each day.
+
+
+### 5.5 ID Compliance with CDC Recommended Criteria
+The CDC recommends substantial health benefits, adults should do at least 150 minutes (2 hours and 30 minutes) to 300 minutes (5 hours) a week of moderate-intensity. [Physical Activity Guidelines for Americans, 2nd edition](https://odphp.health.gov/sites/default/files/2019-09/Physical_Activity_Guidelines_2nd_edition.pdf)
+So, I wanted to add up the sum minutes of Very Active, Fairly Active for a week to see if each unique ID was meeting the CDC’s guidelines for activity.
+
+ ```sql
+1.	SELECT Id, 
+2.	SUM(VeryActiveMinutes + FairlyActiveMinutes) AS Total_Avg_Active_Minutes,
+3.	CASE 
+4.	WHEN SUM(VeryActiveMinutes + FairlyActiveMinutes) >= 150 THEN 'Meets CDC Recommendation'
+5.	WHEN SUM(VeryActiveMinutes + FairlyActiveMinutes) <150 THEN 'Does Not Meet CDC Recommendation'
+6.	END CDC_Recommendations
+7.	FROM `my-project-2024-423122.bellabeat.dailyActivity_merged`
+8.	WHERE ActivityDay BETWEEN '2016-04-17' AND '2016-04-23'
+9.	GROUP BY Id
+```
+
+![8](https://github.com/user-attachments/assets/337aa923-3020-4c6a-9311-355bdd84e31f)
+
+Out of 33 users, 18 met the CDC Recommendations, 14 did not, and 1 did not have data from this time period.
+
+### 5.6 Active vs. Inactive Based on Average Steps
+The baseline number of steps per day has varied across studies but the typical amount is about 5,000 steps a day. It is estimated that 80 percent of daily steps among less active people are light intensity. Most research studies designed to increase physical activity have focused on increasing both the amount and intensity of physical activity above basic movement from daily life activities. 
+Studies that focus on steps often set targets of 10,000 steps a day or a percentage increase in steps a day to encourage people to increase their amount of moderate-to-vigorous physical activity. [Physical Activity Guidelines for Americans, 2nd edition](https://odphp.health.gov/sites/default/files/2019-09/Physical_Activity_Guidelines_2nd_edition.pdf)
+
+```sql
+1.	SELECT Id,
+2.	avg(TotalSteps) AS Avg_Total_Steps,
+3.	CASE
+4.	WHEN avg(TotalSteps) <= 5000 THEN 'Inactive'
+5.	WHEN avg(TotalSteps) > 5000 THEN 'Active User'
+6.	END User_Type
+7.	FROM `my-project-2024-423122.bellabeat.dailyActivity_merged`
+8.	GROUP BY Id
+```
+
+![9](https://github.com/user-attachments/assets/3e443c57-32c9-42e7-a8bb-f87b0173c4d7)
+
+25 users are active users and only 8 are inactive users.
+
+
+
 
 
 
