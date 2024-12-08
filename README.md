@@ -317,6 +317,162 @@ Studies that focus on steps often set targets of 10,000 steps a day or a percent
 
 25 users are active users and only 8 are inactive users.
 
+### 5.7 Active Minutes, Calories Burned, and Steps Logged
+I am interested to see what their logged calories tell us about how many steps they take and how long they are active.
+
+```sql
+1.	SELECT Id, 
+2.	Sum(TotalSteps) AS Sum_total_steps,
+3.	SUM(Calories) AS Sum_Calories, 
+4.	SUM(VeryActiveMinutes + FairlyActiveMinutes) AS Sum_Active_Minutes
+5.	FROM `my-project-2024-423122.bellabeat.dailyActivity_merged`
+6.	GROUP BY Id
+```
+
+![10](https://github.com/user-attachments/assets/05fd4f58-9901-419c-976e-d45561042f3b)
+
+This graph illustrates the relationship between three metrics: total calories burned, total active minutes, and total steps taken by individual users. The data shows that these metrics generally follow the same directional trend, indicating a strong correlation between physical activity, calorie expenditure, and step count.
+As active minutes increase, there is a corresponding rise in both calories burned and steps taken, highlighting the interdependence of physical activity intensity and its outcomes. This pattern is consistent across users, with some variations and outliers that may warrant further exploration.
+
+### 5.8 Average Steps by Day  
+Next, I wanted to analyze the average number of steps taken each day to determine if certain days of the week are busier than others.
+
+```sql
+1.	SELECT 
+2.	activityday,
+3.	FORMAT_DATE('%A', activityday) AS weekday,
+4.	ROUND (avg(TotalSteps), 2) AS Average_Total_Steps,
+5.	FROM  
+6.	`my-project-2024-423122.bellabeat.dailyActivity_merged`
+7.	GROUP BY 
+8.	activityday, weekday
+9.	ORDER BY 
+10.	Activityday
+```
+
+![11](https://github.com/user-attachments/assets/ddca68f4-4ddb-47c4-a8ff-6cdbfe2f1362)
+
+The activity levels are relatively consistent throughout the week, with higher activity on Tuesdays, Wednesdays, Thursdays, and Saturdays, and lower activity on Mondays, Fridays, and Sundays. This suggests a routine with similar activity levels most days, with potential for relaxation or leisure on weekends.
+
+### 5.9 Total Steps by Hour
+Next, I want to analyze total steps by hour to identify when our users are most active.
+
+```sql
+1.	SELECT
+2.	  EXTRACT(HOUR FROM Activity) AS hour,
+3.	  SUM(StepTotal) AS Total_Steps_By_Hour
+4.	FROM
+5.	  `my-project-2024-423122.bellabeat.hourlySteps_merged`
+6.	GROUP BY
+7.	  hour
+8.	ORDER BY
+9.	  Total_Steps_By_Hour DESC;
+```
+
+![12](https://github.com/user-attachments/assets/7ab13177-0322-430f-8259-125696d6a5ff)
+
+The top 5 hours of steps recorded were:
+
+ - 18:00:00 (6pm) — 542,848 steps
+ - 19:00:00 (7pm) — 528,552 steps
+ - 12:00:00 (12pm) — 505,848 steps
+ - 17:00:00 (5pm) — 498,511 steps
+ - 14:00:00 (2pm) — 497,813 steps
+
+### 5.10 Average Calories by Day 
+
+```sql
+1.	SELECT 
+2.	activityday,
+3.	FORMAT_DATE('%A', activityday) AS weekday,
+4.	ROUND (avg(Calories), 2) AS Average_Total_Calories,
+5.	FROM  
+6.	`my-project-2024-423122.bellabeat.dailyActivity_merged`
+7.	GROUP BY 
+8.	activityday, weekday
+9.	ORDER BY 
+10.	Activityday
+```
+
+The activity levels are relatively consistent throughout the week, with higher activity on Tuesdays, which is the day that have spent more calories
+
+![13](https://github.com/user-attachments/assets/01a9d4fb-8312-4587-a3e0-592e3c87c563)
+
+### 5.11 Total calories by Hour
+
+```sql
+1.	SELECT
+2.	EXTRACT(HOUR FROM Activity) AS hour,
+3.	SUM(Calories) AS Total_Calories_By_Hour
+4.	FROM
+5.	`my-project-2024-423122.bellabeat.hourlyCalories_merged`
+6.	GROUP BY
+7.	hour
+8.	ORDER BY
+9.	Total_Calories_By_Hour DESC;
+```
+
+![14](https://github.com/user-attachments/assets/33f03d1e-c233-4a1e-82e1-6777035e109f)
+
+The top 5 hours of calories recorded were:
+
+ - 18:00:00 (6pm) — 111884
+ - 17:00:00 (7pm) — 111214
+ - 19:00:00 (12pm) — 110065
+ - 12:00:00 (5pm) — 108056
+ - 14:00:00 (2pm) — 106590
+
+![15](https://github.com/user-attachments/assets/84aeac4a-ad33-4a89-bd83-4d71d8fb7873)
+
+This image consists of four visualizations summarizing data on calories burned and steps taken:
+
+1. **Top-Left: Average Calories by Day**  
+   - Displays the average calories burned each day of the week.  
+   - The highest average calories burned are on Tuesday (2,352.9), while the lowest are on Thursday (2,129.7).
+
+2. **Top-Right: Average Steps by Weekday**  
+   - Highlights the average steps taken on each weekday.  
+   - Tuesday has the highest average steps (8,126), while Sunday has the lowest (6,937).
+
+3. **Bottom-Left: Total Steps by Hour**  
+   - Line chart showing the total steps by hour of the day.  
+   - Peaks are observed around midday (12 PM) and early evening (5–7 PM).
+
+4. **Bottom-Right: Total Calories by Hour**  
+   - Line chart showing the total calories burned by hour of the day.  
+   - Calories burned gradually increase through the day, peaking between 5–7 PM.
+
+These visualizations provide insights into daily and hourly trends in activity and calorie expenditure.
+
+### 5.12 Correlation of Steps with Active Minutes
+
+```sql
+1.	WITH activity_data AS (
+2.	  SELECT 1000 AS total_steps, 20 AS VeryActiveMinutes
+3.	 UNION ALL
+4.	  SELECT 1500, 25 UNION ALL
+5.	  SELECT 2000, 30 UNION ALL
+6.	  SELECT 2500, 35 UNION ALL
+7.	  SELECT 3000, 40
+8.	)
+9.	
+10.	SELECT 
+11.	  CORR(total_steps,VeryActiveMinutes) AS correlation_coefficient
+12.	FROM 
+13.	  activity_data
+```
+**1** indicates a perfect positive correlation (as one increases, so does the other
+
+
+
+
+
+
+
+
+
+
+
 
 
 
